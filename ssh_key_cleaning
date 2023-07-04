@@ -1,0 +1,19 @@
+#!/bin/bash
+
+ip_address="140.82.113.4"
+known_hosts_file="$HOME/.ssh/known_hosts"
+output_file="duplicates"
+
+# Search for the IP address in the known_hosts file and store the matching entries in an array
+matching_entries=($(grep -n "$ip_address" "$known_hosts_file"))
+
+# Iterate over the matching entries and extract the line numbers and corresponding host entries
+for entry in "${matching_entries[@]}"; do
+    line_number=$(echo "$entry" | cut -d':' -f1)
+    host_entry=$(echo "$entry" | cut -d':' -f2-)
+    
+    # Output the line number and host entry that should be removed to the output file
+    echo "Line $line_number: $host_entry" >> "$output_file"
+done
+
+echo "Duplicates have been stored in the file: $output_file"

@@ -13,7 +13,9 @@ services:
     volumes:
       - ./create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
 
-  migration_app:
-    build:
-      context: ./app
-      dockerfile: Dockerfile
+  # migration_app:
+  #   build:
+  #     context: ./app
+  #     dockerfile: Dockerfile
+  #   volumes:
+  #     - ./app:/app

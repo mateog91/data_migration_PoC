@@ -1,12 +1,3 @@
-CREATE TABLE hired_employees (
-	id int NOT NULL,
-	name varchar NOT NULL,
-	datetime varchar NOT NULL,
-	department_id int NOT NULL,
-	job_id int NOT NULL,
-	PRIMARY KEY (id)
-);
-
 CREATE TABLE departments (
 	id int NOT NULL,
 	department varchar NOT NULL,
@@ -16,6 +7,15 @@ CREATE TABLE departments (
 CREATE TABLE jobs (
 	id int NOT NULL,
 	job varchar NOT NULL,
+	PRIMARY KEY (id)
+);
+
+CREATE TABLE hired_employees (
+	id int NOT NULL,
+	name varchar,
+	datetime varchar,
+	department_id int,
+	job_id int,
 	PRIMARY KEY (id)
 );
 

@@ -4,7 +4,7 @@ services:
   postgres:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: postgres.Dockerfile
     ports:
       - "5432:5432"
     restart: always
@@ -13,15 +13,28 @@ services:
       POSTGRES_PASSWORD: pswd12345
       POSTGRES_DB: postgres
     volumes:
-      # - ./create_tables.sql:/docker-entrypoint-initdb.d/create_tables.sql
-      - ./postgres-data:/var/lib/postgresql/data
-      # - ./app/file_storage:/file_storage
+      - ./file_storage:/file_storage
 
-  migration_app:
+  data_ingestion:
     build:
-      context: ./app
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: data_ingestion.Dockerfile
     volumes:
-      - ./app:/app
+      - ./file_storage:/file_storage
+      - ./data_ingestion:/data_ingestion
     depends_on:
       - postgres
+
+  api:
+    build:
+      context: .
+      dockerfile: api.Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./file_storage:/file_storage
+      - ./api/app:/api/app
+    depends_on:
+      - postgres
+volumes:
+  file_storage:
